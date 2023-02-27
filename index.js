@@ -48,7 +48,7 @@ const authRouter = require("./routes/auth");
 
 app.use("/api/auth", authRouter);
 // app.use("/api/user/", userRouter);
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   return res.status(200).json({
     success: true,
   });
