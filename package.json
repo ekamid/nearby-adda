@@ -1,0 +1,45 @@
+{
+  "name": "nearby_adda",
+  "version": "1.0.0",
+  "description": "API for app where nearby people hang out together in a event",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm run dev --prefix view",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "mocha --timeout 10000"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ekamid"
+  },
+  "author": "Ebrahim Khalil",
+  "license": "MIT",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
+    "@tanstack/react-query": "^4.0.10",
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
+    "concurrently": "^7.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.7.8",
+    "nodemon": "^2.0.16",
+    "nyc": "^15.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4"
+  }
+}
