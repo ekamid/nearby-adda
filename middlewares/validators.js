@@ -9,7 +9,7 @@ const registerValidationRules = () => {
       .withMessage("name must be specified."),
 
     body("username")
-      .isLength({ min: 1 })
+      .isLength({ min: 3 })
       .trim()
       .withMessage("Username must be specified.")
       .custom((value) => {
@@ -28,7 +28,7 @@ const registerValidationRules = () => {
       .custom((value) => {
         return UserModel.findOne({ email: value }).then((user) => {
           if (user) {
-            return Promise.reject("E-mail already in use");
+            return Promise.reject("Email already in use");
           }
         });
       }),

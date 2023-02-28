@@ -1,8 +1,8 @@
 const express = require("express");
 
-const authRouter = express.Router();
+const router = express.Router();
 
-const AuthController = require("../controllers/AuthController");
+const AuthController = require("../controllers/users.controller");
 
 // const {
 //   registerValidationRules,
@@ -11,21 +11,21 @@ const AuthController = require("../controllers/AuthController");
 //   loginValidate,
 // } = require("../middlewares/validators");
 
-authRouter.post(
+router.post(
   "/register",
   // registerValidationRules(),
   // registerValidate,
   AuthController.register
 );
 
-authRouter.post(
+router.post(
   "/login",
   // loginValidationRules(),
   // loginValidate,
   AuthController.login
 );
 
-authRouter.post("/password/forgot", AuthController.forgotPassword);
-authRouter.post("/password/reset/:token", AuthController.resetPassword);
+router.post("/password/forgot", AuthController.forgotPassword);
+router.post("/password/reset/:token", AuthController.resetPassword);
 
-module.exports = authRouter;
+module.exports = router;

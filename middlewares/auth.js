@@ -13,10 +13,8 @@ const auth = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     let user = await UserModel.findById(decoded._id);
-    console.log("user");
-    console.log(user);
     if (!user) {
-      return res.status(401).json({ error: [{ msg: "Invalid excess Token" }] });
+      return res.status(401).json({ error: [{ msg: "Invalid access Token" }] });
     }
     req.user = decoded;
     next();
