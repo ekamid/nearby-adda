@@ -1,9 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const path = require("path");
 const mongoose = require("mongoose");
-
 
 //config file
 const { PORT, DATABASE_URL } = require("./config/enviroments");
@@ -41,7 +39,7 @@ app.use(cors());
 const usersRouter = require("./routes/users");
 
 //Route Prefixes
-app.use("/api/users", userRouter);
+app.use("/v1/users", usersRouter);
 
 //api responses
 const apiResponse = require("./helpers/apiResponse");
@@ -62,3 +60,7 @@ app.use((err, req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+module.exports = {
+  app,
+};

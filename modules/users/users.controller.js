@@ -46,11 +46,11 @@ const loginUser = async (req, res) => {
       email: user.email,
     };
 
-    const token = createJWToken(userData);
+    const data = createJWToken(userData);
 
     apiResponse.successResponseWithData(res, "User logged in successfully", {
-      ...user,
-      token,
+      user: user,
+      token: data.token,
     });
   } catch (err) {
     apiResponse.ErrorResponse(res, err);

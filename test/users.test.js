@@ -8,7 +8,7 @@ const UserModel = require("../models/User");
 const UsersService = require("../modules/users/users.service");
 const UsersController = require("../modules/users/users.controller");
 
-const app = require("../index");
+const { app } = require("../index");
 
 chai.use(chaiHttp); // add chai-http to chai
 
@@ -85,20 +85,23 @@ describe("testing suite for User workflow", () => {
     assert.exists(user);
   });
 
-  it("Sign in user using email and password", async () => {
+  it("Signin user using email and password", async () => {
     try {
-      const response = await chai.request(app).post("/signin").send({
+      const response = await chai.request(app).post("/v1/users/login").send({
         email: "ebrahim@gmail.com",
         password: "123123",
       });
 
-      console.log(response.json());
-
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property("token");
+      expect(response.body.data).to.have.property("user");
+      user = response.body.data.user;
+      expect(response.body.data).to.have.property("token");
     } catch (err) {
-      console.log(err);
       error = err;
+      console.log(err);
     }
+
+    assert.notExists(error);
+    assert.exists(user);
   });
 });

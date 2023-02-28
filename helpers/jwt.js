@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-exports.createJwtToken = (userData) => {
+const createJWToken = (userData) => {
   //Prepare JWT token for authentication
   const jwtPayload = userData;
 
@@ -14,4 +14,8 @@ exports.createJwtToken = (userData) => {
   userData.token = jwt.sign(jwtPayload, secret, jwtData);
 
   return userData;
+};
+
+module.exports = {
+  createJWToken,
 };
