@@ -1,11 +1,18 @@
 process.env.NODE_ENV = "test";
-
-const { assert, expect } = require("chai");
+const chai = require("chai");
+const chaiHttp = require("chai-http");
 const mongoose = require("mongoose");
 const config = require("../config/enviroments");
 
 const UserModel = require("../models/User");
 const UsersService = require("../modules/users/users.service");
+const UsersController = require("../modules/users/users.controller");
+
+const app = require("../index");
+
+chai.use(chaiHttp); // add chai-http to chai
+
+const { assert, expect } = require("chai");
 
 /**
  * The codes inside this block will run before any tests in this file runs,
@@ -76,5 +83,22 @@ describe("testing suite for User workflow", () => {
     }
     assert.notExists(error);
     assert.exists(user);
+  });
+
+  it("Sign in user using email and password", async () => {
+    try {
+      const response = await chai.request(app).post("/signin").send({
+        email: "ebrahim@gmail.com",
+        password: "123123",
+      });
+
+      console.log(response.json());
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("token");
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
   });
 });
