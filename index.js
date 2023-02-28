@@ -2,6 +2,9 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerApiDoc = require("./config/swagger.json");
 
 //config file
 const { PORT, DATABASE_URL } = require("./config/enviroments");
@@ -40,6 +43,7 @@ const usersRouter = require("./routes/users");
 
 //Route Prefixes
 app.use("/v1/users", usersRouter);
+app.use("/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerApiDoc));
 
 //api responses
 const apiResponse = require("./helpers/apiResponse");

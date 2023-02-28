@@ -1,0 +1,66 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Nearby Adda",
+    "description": "REST API for a social networking site where user can find their neary public adda within a certain radius."
+  },
+  "host": "localhost:5000",
+  "basePath": "/v1",
+  "schemes": ["http"],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the user"
+        },
+        "username": {
+          "type": "string",
+          "description": "User's username. Must be unique. Must be more than or equal to 3 characters long."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email. Must be unique"
+        },
+        "password": {
+          "type": "string",
+          "description": "Name of the password. Must be more than or equal to 6 characters long"
+        }
+      },
+      "required": ["name", "username", "email", "password"]
+    }
+  }
+}

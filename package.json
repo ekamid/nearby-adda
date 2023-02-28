@@ -1,10 +1,10 @@
 {
   "name": "nearby_adda",
   "version": "1.0.0",
-  "description": "API for app where nearby people hang out together in a event",
+  "description": "REST API for a social networking site where user can find their neary public adda within a certain radius",
   "main": "index.js",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "scripts": {
     "start": "node index.js",
@@ -35,7 +35,8 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.8",
     "nodemon": "^2.0.16",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
     "chai": "^4.3.6",
