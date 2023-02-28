@@ -18,7 +18,12 @@ const {
   getAuthenticatedUser,
 } = require("../modules/users/users.controller");
 
-router.post("/", registerValidationRules(), registerValidate, createUser);
+router.post(
+  "/register",
+  registerValidationRules(),
+  registerValidate,
+  createUser
+);
 router.post("/login", loginValidationRules(), loginValidate, loginUser);
 
 router.use(auth);

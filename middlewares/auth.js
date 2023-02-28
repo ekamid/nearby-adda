@@ -12,7 +12,7 @@ const auth = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    let user = await UserModel.findById(decoded._id);
+    let user = await UserModel.findById(decoded.id);
     if (!user) {
       return res.status(401).json({ error: [{ msg: "Invalid access Token" }] });
     }

@@ -36,9 +36,9 @@ var cleanup = async () => {
   await UserModel.deleteMany();
 };
 
-let user, error;
+let user, error, token;
 
-describe("testing suite for User workflow", () => {
+describe("testing for User workflow", () => {
   // user related
 
   it("User creates an account successfully", async () => {
@@ -85,7 +85,7 @@ describe("testing suite for User workflow", () => {
     assert.exists(user);
   });
 
-  it("Signin user using email and password", async () => {
+  it("Email and password are valid", async () => {
     try {
       const response = await chai.request(app).post("/v1/users/login").send({
         email: "ebrahim@gmail.com",
@@ -94,6 +94,24 @@ describe("testing suite for User workflow", () => {
 
       expect(response).to.have.status(200);
       expect(response.body).to.have.property("token");
+      token = response.body.token;
+    } catch (err) {
+      error = err;
+      console.log(err);
+    }
+
+    assert.notExists(error);
+  });
+
+  it("Logged user is authenticated", async () => {
+    try {
+      const response = await chai
+        .request(app)
+        .get("/v1/users/me")
+        .set("auth-token", token);
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("user");
     } catch (err) {
       error = err;
       console.log(err);

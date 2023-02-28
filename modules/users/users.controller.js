@@ -2,8 +2,6 @@ const apiResponse = require("../../helpers/apiResponse");
 const { createJWToken } = require("../../helpers/jwt");
 const UsersService = require("./users.service");
 
-// const usersService = require
-
 const createUser = async (req, res) => {
   try {
     const user = await UsersService.createUser(req.body);
@@ -61,7 +59,7 @@ const getAuthenticatedUser = async (req, res) => {
   try {
     const authenticatedUser = await UsersService.getUserById(user.id);
 
-    if (!userById) {
+    if (!authenticatedUser) {
       return apiResponse.notFoundResponse(res, "User not found");
     }
 
