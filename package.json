@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "API for app where nearby people hang out together in a event",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm run dev --prefix view",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "mocha --timeout 10000"
-  },
-  "engines": {
-    "node": "14.x"
   },
   "repository": {
     "type": "git",
