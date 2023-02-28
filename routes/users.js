@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const auth = require("../middlewares/auth");
+
 const {
   registerValidationRules,
   registerValidate,
@@ -10,9 +12,17 @@ const {
 } = require("../middlewares/validators");
 
 //controllers
-const { createUser, loginUser } = require("../modules/users/users.controller");
+const {
+  createUser,
+  loginUser,
+  getAuthenticatedUser,
+} = require("../modules/users/users.controller");
 
 router.post("/", registerValidationRules(), registerValidate, createUser);
 router.post("/login", loginValidationRules(), loginValidate, loginUser);
+
+router.use(auth);
+
+router.get("/me", getAuthenticatedUser);
 
 module.exports = router;

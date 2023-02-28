@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
     }
 
     let userData = {
-      _id: user._id,
+      id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
@@ -49,9 +49,29 @@ const loginUser = async (req, res) => {
     const data = createJWToken(userData);
 
     apiResponse.successResponseWithData(res, "User logged in successfully", {
-      user: user,
       token: data.token,
     });
+  } catch (err) {
+    apiResponse.ErrorResponse(res, err);
+  }
+};
+
+const getAuthenticatedUser = async (req, res) => {
+  const { user } = req;
+  try {
+    const authenticatedUser = await UsersService.getUserById(user.id);
+
+    if (!userById) {
+      return apiResponse.notFoundResponse(res, "User not found");
+    }
+
+    return apiResponse.successResponseWithData(
+      res,
+      "Logged in user data retrived successfully",
+      {
+        user: authenticatedUser,
+      }
+    );
   } catch (err) {
     apiResponse.ErrorResponse(res, err);
   }
@@ -60,4 +80,5 @@ const loginUser = async (req, res) => {
 module.exports = {
   createUser,
   loginUser,
+  getAuthenticatedUser,
 };

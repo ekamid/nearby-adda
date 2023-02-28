@@ -93,15 +93,12 @@ describe("testing suite for User workflow", () => {
       });
 
       expect(response).to.have.status(200);
-      expect(response.body.data).to.have.property("user");
-      user = response.body.data.user;
-      expect(response.body.data).to.have.property("token");
+      expect(response.body).to.have.property("token");
     } catch (err) {
       error = err;
       console.log(err);
     }
 
     assert.notExists(error);
-    assert.exists(user);
   });
 });

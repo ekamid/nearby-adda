@@ -14,9 +14,9 @@ const UserSchema = new mongoose.Schema(
     published: { type: Boolean, default: true },
     verified: { type: Boolean, default: true },
     active: { type: Boolean, default: true },
-    address: { type: String },
-    latitude: { type: Number },
-    longitude: { type: Number },
+    address: { type: String, default: null },
+    latitude: { type: Number, default: null },
+    longitude: { type: Number, default: null },
     role: {
       type: mongoose.Schema.ObjectId,
       ref: "Role",
@@ -44,7 +44,11 @@ UserSchema.pre("save", function (next) {
 //compare password
 UserSchema.methods.comparePassword = function (candidatePassword) {
   try {
+    console.log(this.password);
+    console.log("this.password");
     const isMatch = bcrypt.compareSync(candidatePassword, this.password);
+    console.log(isMatch);
+
     return isMatch;
   } catch (err) {
     return err;
