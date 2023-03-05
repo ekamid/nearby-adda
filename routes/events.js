@@ -3,15 +3,13 @@ const router = express.Router();
 
 const auth = require("../middlewares/auth");
 
+const { validate } = require("../middlewares/validators");
+
+//controllers
+const { createEvent } = require("../modules/events/events.controller");
+
 router.use(auth);
 
-router.get("/me", getAuthenticatedUser);
-
-router.post(
-  "/update-address",
-  updateAddressValidationRules(),
-  validate,
-  updateUserAddress
-);
+router.post("/", createEvent);
 
 module.exports = router;

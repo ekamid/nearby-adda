@@ -40,10 +40,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 const usersRouter = require("./routes/users");
-const  = require("./routes/users");
+const eventsRouter = require("./routes/events");
 
 //Route Prefixes
 app.use("/v1/users", usersRouter);
+app.use("/v1/events", eventsRouter);
 app.use("/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerApiDoc));
 
 //api responses

@@ -85,8 +85,8 @@ describe("testing for Event workflow", () => {
         endDate: new Date(Date.now() + 7200000), // 2 hours from now
         description: "This is a test event.",
         address: "Rampura Tv Bhavan",
-        latitude: "23.76545319531347",
-        longitude: "90.4226233932535",
+        latitude: 23.76545319531347,
+        longitude: 90.4226233932535,
       };
 
       const response = await chai

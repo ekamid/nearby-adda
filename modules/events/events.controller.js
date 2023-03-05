@@ -14,12 +14,11 @@ const createEvent = async (req, res) => {
       apiResponse.ErrorResponse(res, "Something went wrong");
     }
 
-    apiResponse.successResponseWithData(
-      res,
-      "Event Created Successfully!",
-      event
-    );
+    apiResponse.successResponseWithData(res, "Event Created Successfully!", {
+      event,
+    });
   } catch (err) {
+    console.log(err);
     apiResponse.ErrorResponse(res, err);
   }
 };
