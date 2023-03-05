@@ -5,13 +5,9 @@ const auth = require("../middlewares/auth");
 
 const {
   registerValidationRules,
-  registerValidate,
-
   loginValidationRules,
-  loginValidate,
-
   updateAddressValidationRules,
-  updateAddressValidate,
+  validate,
 } = require("../middlewares/validators");
 
 //controllers
@@ -22,13 +18,8 @@ const {
   updateUserAddress,
 } = require("../modules/users/users.controller");
 
-router.post(
-  "/register",
-  registerValidationRules(),
-  registerValidate,
-  createUser
-);
-router.post("/login", loginValidationRules(), loginValidate, loginUser);
+router.post("/register", registerValidationRules(), validate, createUser);
+router.post("/login", loginValidationRules(), validate, loginUser);
 
 router.use(auth);
 
@@ -37,7 +28,7 @@ router.get("/me", getAuthenticatedUser);
 router.post(
   "/update-address",
   updateAddressValidationRules(),
-  updateAddressValidate,
+  validate,
   updateUserAddress
 );
 

@@ -1,4 +1,5 @@
-process.env.NODE_ENV = "test";
+process.env.NODE_ENV = "test"; //it changes the environment dev to test
+
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const mongoose = require("mongoose");
@@ -50,7 +51,6 @@ describe("testing for User workflow", () => {
 
       user = userInDB;
     } catch (err) {
-      console.log(err);
       error = err;
     }
     assert.notExists(error);
@@ -63,7 +63,6 @@ describe("testing for User workflow", () => {
 
       user = userInDB;
     } catch (err) {
-      console.log(err);
       error = err;
     }
     assert.notExists(error);
@@ -75,7 +74,6 @@ describe("testing for User workflow", () => {
       const userInDB = await UsersService.getUserByUsername("ebrahim");
       user = userInDB;
     } catch (err) {
-      console.log(err);
       error = err;
     }
     assert.notExists(error);
@@ -111,7 +109,6 @@ describe("testing for User workflow", () => {
       expect(response.body.data).to.have.property("user");
     } catch (err) {
       error = err;
-      console.log(err);
     }
 
     assert.notExists(error);

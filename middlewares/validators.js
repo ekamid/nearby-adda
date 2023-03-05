@@ -1,6 +1,21 @@
 const { body, validationResult } = require("express-validator");
 const UserModel = require("../models/User");
 
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    return next();
+  }
+
+  const extractedErrors = [];
+
+  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
+
+  return res.status(422).json({
+    errors: extractedErrors,
+  });
+};
+
 const registerValidationRules = () => {
   return [
     body("name")
@@ -49,21 +64,6 @@ const registerValidationRules = () => {
   ];
 };
 
-const registerValidate = (req, res, next) => {
-  const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    return next();
-  }
-
-  const extractedErrors = [];
-
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
-
-  return res.status(422).json({
-    errors: extractedErrors,
-  });
-};
-
 const loginValidationRules = () => {
   return [
     body("email")
@@ -82,19 +82,6 @@ const loginValidationRules = () => {
       next();
     },
   ];
-};
-
-const loginValidate = (req, res, next) => {
-  const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    return next();
-  }
-  const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
-
-  return res.status(422).json({
-    errors: extractedErrors,
-  });
 };
 
 const updateAddressValidationRules = () => {
@@ -128,24 +115,9 @@ const updateAddressValidationRules = () => {
   ];
 };
 
-const updateAddressValidate = (req, res, next) => {
-  const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    return next();
-  }
-  const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
-
-  return res.status(422).json({
-    errors: extractedErrors,
-  });
-};
-
 module.exports = {
+  validate,
   registerValidationRules,
-  registerValidate,
   loginValidationRules,
-  loginValidate,
   updateAddressValidationRules,
-  updateAddressValidate,
 };
