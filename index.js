@@ -4,10 +4,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const swaggerUi = require("swagger-ui-express");
 
-const swaggerApiDoc = require("./config/swagger.json");
+const swaggerApiDoc = require("./src/config/swagger.json");
 
 //config file
-const { PORT, DATABASE_URL } = require("./config/enviroments");
+const { PORT, DATABASE_URL } = require("./src/config/enviroments");
 
 //initialize app
 const app = express();
@@ -39,8 +39,8 @@ app.use(express.urlencoded({ extended: false }));
 // to allow cross origin resource sharing
 app.use(cors());
 
-const usersRouter = require("./routes/users");
-const eventsRouter = require("./routes/events");
+const usersRouter = require("./src/routes/users");
+const eventsRouter = require("./src/routes/events");
 
 //Route Prefixes
 app.use("/v1/users", usersRouter);
@@ -48,7 +48,7 @@ app.use("/v1/events", eventsRouter);
 app.use("/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerApiDoc));
 
 //api responses
-const apiResponse = require("./helpers/apiResponse");
+const apiResponse = require("./src/helpers/apiResponse");
 const { notFoundResponse, unauthorizedResponse } = apiResponse;
 
 // throw 404 if URL not found

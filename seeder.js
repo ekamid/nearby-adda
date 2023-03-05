@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 //config file
-const { PORT, DATABASE_URL } = require("./config/enviroments");
+const { PORT, DATABASE_URL } = require("./src/config/enviroments");
 
-const { roleSeeder } = require("./seeders/RoleSeeder");
+const { roleSeeder } = require("./src/seeders/RoleSeeder");
 const seeder = process.argv[process.argv.length - 1];
 
 mongoose
