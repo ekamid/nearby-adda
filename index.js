@@ -40,6 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 const usersRouter = require("./routes/users");
+const  = require("./routes/users");
 
 //Route Prefixes
 app.use("/v1/users", usersRouter);
