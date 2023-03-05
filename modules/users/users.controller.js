@@ -76,11 +76,12 @@ const getAuthenticatedUser = async (req, res) => {
 };
 
 const updateUserAddress = async (req, res) => {
+  const { user, body } = req;
   try {
-    const authenticatedUser = await UsersService.getUserById(user.id);
+    const updatedUser = await UsersService.updateUserAddress(user.id, body);
 
-    if (!authenticatedUser) {
-      return apiResponse.notFoundResponse(res, "User not found");
+    if (!updatedUser.address) {
+      apiResponse.ErrorResponse(res, "Something went wrong");
     }
 
     return apiResponse.successResponse(

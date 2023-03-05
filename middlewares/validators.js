@@ -105,7 +105,7 @@ const updateAddressValidationRules = () => {
       .withMessage("Address must be specified."),
 
     body("latitude")
-      .isEmpty("latitude must be specified")
+      .isFloat("latitude must be valid")
       .custom((value, { req }) => {
         if (value < -90 || value > 90) {
           throw new Error("Latitude is not in the range");
@@ -114,7 +114,7 @@ const updateAddressValidationRules = () => {
       }),
 
     body("longitude")
-      .isEmpty("Longitude must be specified")
+      .isFloat("longitude must be valid")
       .custom((value, { req }) => {
         if (value < -180 || value > 180) {
           throw new Error("Longitude is not in the range");
@@ -149,59 +149,3 @@ module.exports = {
   updateAddressValidationRules,
   updateAddressValidate,
 };
-
-// const registerValidation = [
-//   body("name")
-//     .isLength({ min: 1 })
-//     .trim()
-//     .withMessage("First name must be specified.")
-//     .isAlphanumeric()
-//     .withMessage("First name has non-alphanumeric characters."),
-
-//   body("username")
-//     .isLength({ min: 1 })
-//     .trim()
-//     .withMessage("Username must be specified.")
-//     .isAlphanumeric()
-//     .withMessage("Username has non-alphanumeric characters.")
-//     .custom((value) => {
-//       return UserModel.findOne({ username: value }).then((user) => {
-//         if (user) {
-//           return Promise.reject("Username already exists");
-//         }
-//       });
-//     }),
-//   body("email")
-//     .isLength({ min: 1 })
-//     .trim()
-//     .withMessage("Email must be specified.")
-//     .isEmail()
-//     .withMessage("Email must be a valid email address.")
-//     .custom((value) => {
-//       return UserModel.findOne({ email: value }).then((user) => {
-//         if (user) {
-//           return Promise.reject("E-mail already in use");
-//         }
-//       });
-//     }),
-//   body("password")
-//     .isLength({ min: 6 })
-//     .trim()
-//     .withMessage("Password must be 6 characters or greater."),
-
-//   body("passwordConfirmation").custom((value, { req }) => {
-//     if (value !== req.body.password) {
-//       throw new Error("Passwords don't match");
-//     }
-//     return true;
-//   }),
-//   (res, req, next) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(422).json({ errors: errors.array() });
-//     }
-//     next();
-//   },
-// ];
-
-// module.exports = { registerValidation };

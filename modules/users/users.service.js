@@ -16,9 +16,21 @@ const getUserByUsername = async (username) => {
   return UserModel.findOne({ username }).select("-password");
 };
 
+const updateUserAddress = async (userId, data) => {
+  const updatedUser = await UserModel.findByIdAndUpdate(
+    userId,
+    {
+      $set: { ...data },
+    },
+    { new: true }
+  );
+  return updatedUser;
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
   getUserByUsername,
   getUserById,
+  updateUserAddress,
 };

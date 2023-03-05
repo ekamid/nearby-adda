@@ -130,7 +130,7 @@ describe("testing for User workflow", () => {
         });
 
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property("success", true);
+      expect(response.body).to.have.property("status", 1);
     } catch (err) {
       error = err;
       console.log(err);
