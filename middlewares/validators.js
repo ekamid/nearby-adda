@@ -97,11 +97,57 @@ const loginValidate = (req, res, next) => {
   });
 };
 
+const updateAddressValidationRules = () => {
+  return [
+    body("address")
+      .isLength({ min: 1 })
+      .trim()
+      .withMessage("Address must be specified."),
+
+    body("latitude")
+      .isEmpty("latitude must be specified")
+      .custom((value, { req }) => {
+        if (value < -90 || value > 90) {
+          throw new Error("Latitude is not in the range");
+        }
+        return true;
+      }),
+
+    body("longitude")
+      .isEmpty("Longitude must be specified")
+      .custom((value, { req }) => {
+        if (value < -180 || value > 180) {
+          throw new Error("Longitude is not in the range");
+        }
+        return true;
+      }),
+
+    (res, req, next) => {
+      next();
+    },
+  ];
+};
+
+const updateAddressValidate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    return next();
+  }
+  const extractedErrors = [];
+  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
+
+  return res.status(422).json({
+    errors: extractedErrors,
+  });
+};
+
 module.exports = {
   registerValidationRules,
   registerValidate,
   loginValidationRules,
   loginValidate,
+  updateAddressValidationRules,
+  updateAddressValidate,
 };
 
 // const registerValidation = [

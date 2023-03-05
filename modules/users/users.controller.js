@@ -75,8 +75,27 @@ const getAuthenticatedUser = async (req, res) => {
   }
 };
 
+const updateUserAddress = async (req, res) => {
+  try {
+    const authenticatedUser = await UsersService.getUserById(user.id);
+
+    if (!authenticatedUser) {
+      return apiResponse.notFoundResponse(res, "User not found");
+    }
+
+    return apiResponse.successResponse(
+      res,
+      "Uesr address updated successfully"
+    );
+  } catch (err) {
+    console.log(err);
+    apiResponse.ErrorResponse(res, err);
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   getAuthenticatedUser,
+  updateUserAddress,
 };

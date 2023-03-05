@@ -6,7 +6,6 @@ const config = require("../config/enviroments");
 
 const UserModel = require("../models/User");
 const UsersService = require("../modules/users/users.service");
-const UsersController = require("../modules/users/users.controller");
 
 const { app } = require("../index");
 
@@ -40,7 +39,6 @@ let user, error, token;
 
 describe("testing for User workflow", () => {
   // user related
-
   it("User creates an account successfully", async () => {
     try {
       const userInDB = await UsersService.createUser({
@@ -75,7 +73,6 @@ describe("testing for User workflow", () => {
   it("User has duplicate username", async () => {
     try {
       const userInDB = await UsersService.getUserByUsername("ebrahim");
-
       user = userInDB;
     } catch (err) {
       console.log(err);
@@ -93,8 +90,8 @@ describe("testing for User workflow", () => {
       });
 
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property("token");
-      token = response.body.token;
+      expect(response.body.data).to.have.property("token");
+      token = response.body.data.token;
     } catch (err) {
       error = err;
       console.log(err);
@@ -103,7 +100,7 @@ describe("testing for User workflow", () => {
     assert.notExists(error);
   });
 
-  it("Logged user is authenticated", async () => {
+  it("Authenticate use by token", async () => {
     try {
       const response = await chai
         .request(app)
@@ -111,7 +108,29 @@ describe("testing for User workflow", () => {
         .set("auth-token", token);
 
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property("user");
+      expect(response.body.data).to.have.property("user");
+    } catch (err) {
+      error = err;
+      console.log(err);
+    }
+
+    assert.notExists(error);
+  });
+
+  it("Update address", async () => {
+    try {
+      const response = await chai
+        .request(app)
+        .post("/v1/users/update-address")
+        .set("auth-token", token)
+        .send({
+          address: "Rampura Tv Bhavan",
+          latitude: "23.76545319531347",
+          longitude: "90.4226233932535",
+        });
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("success", true);
     } catch (err) {
       error = err;
       console.log(err);

@@ -9,6 +9,9 @@ const {
 
   loginValidationRules,
   loginValidate,
+
+  updateAddressValidationRules,
+  updateAddressValidate,
 } = require("../middlewares/validators");
 
 //controllers
@@ -16,6 +19,7 @@ const {
   createUser,
   loginUser,
   getAuthenticatedUser,
+  updateUserAddress,
 } = require("../modules/users/users.controller");
 
 router.post(
@@ -29,5 +33,12 @@ router.post("/login", loginValidationRules(), loginValidate, loginUser);
 router.use(auth);
 
 router.get("/me", getAuthenticatedUser);
+
+router.post(
+  "/update-address",
+  updateAddressValidationRules(),
+  updateAddressValidate,
+  updateUserAddress
+);
 
 module.exports = router;
