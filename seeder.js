@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //config file
-const { PORT, DATABASE_URL } = require("./src/config/enviroments");
+const { DATABASE_URL } = require("./src/config/enviroments");
 
 const { roleSeeder } = require("./src/seeders/RoleSeeder");
 const seeder = process.argv[process.argv.length - 1];
@@ -13,7 +13,6 @@ mongoose
   })
   .then(() => {
     if (process.env.NODE_ENV !== "test") {
-      console.log("connected to db");
       switch (seeder) {
         case "RoleSeeder":
           roleSeeder();

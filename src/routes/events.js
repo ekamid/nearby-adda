@@ -3,7 +3,7 @@ const router = express.Router();
 
 const auth = require("../middlewares/auth");
 
-const { validate } = require("../middlewares/validators");
+// const { validate } = require("../middlewares/validators");
 
 //controllers
 const { createEvent } = require("../modules/events/events.controller");

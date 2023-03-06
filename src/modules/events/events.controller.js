@@ -2,7 +2,7 @@ const apiResponse = require("../../helpers/apiResponse");
 const EventsService = require("./events.service");
 
 const createEvent = async (req, res) => {
-  const { user, body } = req;
+  const { user } = req;
 
   try {
     const event = await EventsService.createEvent({

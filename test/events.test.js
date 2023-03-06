@@ -6,9 +6,9 @@ const mongoose = require("mongoose");
 const config = require("../src/config/enviroments");
 
 const UserModel = require("../src/models/User");
-const EventModel = require("../src/models/Event");
+// const EventModel = require("../src/models/Event");
 const UsersService = require("../src/modules/users/users.service");
-const EventService = require("../src/modules/users/users.service");
+// const EventService = require("../src/modules/users/users.service");
 
 const { app } = require("../index");
 

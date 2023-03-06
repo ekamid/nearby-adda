@@ -93,7 +93,7 @@ const updateAddressValidationRules = () => {
 
     body("latitude")
       .isFloat("latitude must be valid")
-      .custom((value, { req }) => {
+      .custom((value) => {
         if (value < -90 || value > 90) {
           throw new Error("Latitude is not in the range");
         }
@@ -102,7 +102,7 @@ const updateAddressValidationRules = () => {
 
     body("longitude")
       .isFloat("longitude must be valid")
-      .custom((value, { req }) => {
+      .custom((value) => {
         if (value < -180 || value > 180) {
           throw new Error("Longitude is not in the range");
         }
