@@ -9,8 +9,6 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "client": "npm run dev --prefix view",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "mocha --timeout 10000"
   },
   "repository": {

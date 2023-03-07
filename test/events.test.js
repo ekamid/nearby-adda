@@ -129,4 +129,23 @@ describe("testing for Event workflow", () => {
 
     assert.notExists(error);
   });
+
+  it("Get All Events", async () => {
+    try {
+      const response = await chai.request(app).get("/v1/events");
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("status", 1);
+      expect(response.body.data).to.be.an("object");
+      expect(response.body.data).to.have.property("total");
+      expect(response.body.data).to.have.property("rows");
+      expect(response.body.data).to.have.property("current");
+      expect(response.body.data).to.have.property("pages");
+    } catch (err) {
+      error = err;
+      console.log(err);
+    }
+
+    assert.notExists(error);
+  });
 });

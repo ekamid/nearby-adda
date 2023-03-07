@@ -6,7 +6,12 @@ const auth = require("../middlewares/auth");
 // const { validate } = require("../middlewares/validators");
 
 //controllers
-const { createEvent } = require("../modules/events/events.controller");
+const {
+  createEvent,
+  getEvents,
+} = require("../modules/events/events.controller");
+
+router.get("/", getEvents);
 
 router.use(auth);
 
