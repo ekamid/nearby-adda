@@ -6,7 +6,7 @@ const createEvent = async (eventData) => {
 };
 
 const getPaginatedEvents = async (query) => {
-  const { page, limit, search } = query;
+  const { page, limit, search, latitude, longitude, radius } = query;
   const { size, offset } = getPagination(page, limit);
 
   const filter = search ? { name: { $regex: search, $options: "i" } } : {};

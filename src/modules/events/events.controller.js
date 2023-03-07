@@ -32,6 +32,7 @@ const getEvents = async (req, res, next) => {
       ...result,
     });
   } catch (err) {
+    console.log(err); // Output:
     apiResponse.ErrorResponse(res, err);
   }
 };
