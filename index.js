@@ -6,6 +6,8 @@ const swaggerUi = require("swagger-ui-express");
 
 const swaggerApiDoc = require("./src/config/swagger.json");
 
+const path = require("path");
+
 //config file
 const { PORT, DATABASE_URL } = require("./src/config/enviroments");
 
@@ -50,6 +52,37 @@ app.use("/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerApiDoc));
 //api responses
 const apiResponse = require("./src/helpers/apiResponse");
 const { notFoundResponse, unauthorizedResponse } = apiResponse;
+
+//file show
+
+let dir = path.join(__dirname, "/");
+app.use(express.static(dir));
+
+var mime = {
+  gif: "image/gif",
+  jpeg: "image/jpeg",
+  jpg: "image/jpg",
+  png: "image/png",
+  svg: "image/svg+xml",
+  webp: "image/webp",
+};
+
+app.get("*", function (req, res) {
+  var file = path.join(dir, req.path.replace(/\/$/, "/index.html"));
+  if (file.indexOf(dir + path.sep) !== 0) {
+    return res.status(403).end("Forbidden");
+  }
+  var type = mime[path.extname(file).slice(1)] || "text/plain";
+  var s = fs.createReadStream(file);
+  s.on("open", function () {
+    res.set("Content-Type", type);
+    s.pipe(res);
+  });
+  s.on("error", function () {
+    res.set("Content-Type", "text/plain");
+    res.status(404).end("Not found");
+  });
+});
 
 // throw 404 if URL not found
 app.all("*", function (req, res) {

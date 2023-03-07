@@ -1,11 +1,21 @@
+require("dotenv").config();
+
 const mongoose = require("mongoose");
 
 const EventSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: false },
-    mapFlagIcon: { type: String, required: false },
+    imageUrl: {
+      type: String,
+      required: false,
+      default: `${process.env.BASE_PUBLIC_URL}/images/default/default-image.png`,
+    },
+    markerIconUrl: {
+      type: String,
+      required: false,
+      default: `${process.env.BASE_PUBLIC_URL}/images/default/default_map_marker.webp`,
+    },
     startDate: {
       type: Date,
       required: true,
@@ -14,8 +24,7 @@ const EventSchema = new mongoose.Schema(
       type: Date,
       required: false,
     },
-    canceled: { type: Boolean, default: false },
-    canceledMessage: { type: String, default: null },
+    closed: { type: Boolean, default: false },
     address: { type: String, required: true },
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
