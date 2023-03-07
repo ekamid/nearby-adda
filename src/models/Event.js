@@ -19,6 +19,17 @@ const EventSchema = new mongoose.Schema(
     address: { type: String, required: true },
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
     joined_by: [
       {
         type: mongoose.Schema.ObjectId,
@@ -33,4 +44,8 @@ const EventSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Event", EventSchema);
+const Event = mongoose.model("Event", EventSchema);
+
+Event.collection.createIndex({ location: "2dsphere" });
+
+module.exports = Event;
