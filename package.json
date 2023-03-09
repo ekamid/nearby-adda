@@ -4,7 +4,7 @@
   "description": "REST API for a social networking site where user can find their neary public adda within a certain radius",
   "main": "index.js",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "start": "node index.js",
