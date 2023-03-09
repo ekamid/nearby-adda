@@ -9,12 +9,12 @@ const EventSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
       required: false,
-      default: `${process.env.BASE_PUBLIC_URL}/images/default/default-image.png`,
+      default: `${process.env.BASE_PUBLIC_URL}/images/default-image.png`,
     },
     markerIconUrl: {
       type: String,
       required: false,
-      default: `${process.env.BASE_PUBLIC_URL}/images/default/default_map_marker.webp`,
+      default: `${process.env.BASE_PUBLIC_URL}/images/default_map_marker.webp`,
     },
     startDate: {
       type: Date,
