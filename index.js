@@ -58,7 +58,7 @@ const { notFoundResponse, unauthorizedResponse } = apiResponse;
 let dir = path.join(__dirname, "/");
 app.use(express.static(dir));
 
-var mime = {
+const mime = {
   gif: "image/gif",
   jpeg: "image/jpeg",
   jpg: "image/jpg",
@@ -68,12 +68,12 @@ var mime = {
 };
 
 app.get("*", function (req, res) {
-  var file = path.join(dir, req.path.replace(/\/$/, "/index.html"));
+  let file = path.join(dir, req.path.replace(/\/$/, "/index.html"));
   if (file.indexOf(dir + path.sep) !== 0) {
     return res.status(403).end("Forbidden");
   }
-  var type = mime[path.extname(file).slice(1)] || "text/plain";
-  var s = fs.createReadStream(file);
+  let type = mime[path.extname(file).slice(1)] || "text/plain";
+  let s = fs.createReadStream(file);
   s.on("open", function () {
     res.set("Content-Type", type);
     s.pipe(res);
