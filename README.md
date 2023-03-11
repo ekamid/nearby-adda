@@ -6,7 +6,7 @@
     Find out nearby gathering within specific radius.
     <br />
     <br />
-    <a href="https://https://nearby-adda.vercel.app/" target="_blank">View Demo</a>
+    <a href="https://nearby-adda.vercel.app/" target="_blank">View Demo</a>
     ·
     <a href="https://github.com/ekamid/nearby-adda/issues">Report Bug</a>
   </p>
