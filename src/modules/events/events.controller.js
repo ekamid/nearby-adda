@@ -7,6 +7,10 @@ const createEvent = async (req, res) => {
   try {
     const event = await EventsService.createEvent({
       ...req.body,
+      location: {
+        type: "Point",
+        coordinates: [req.body.longitude, req.body.latitude],
+      },
       created_by: user.id,
     });
 

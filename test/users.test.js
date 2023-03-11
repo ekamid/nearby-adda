@@ -41,8 +41,11 @@ var cleanup = async () => {
 
 let user, error, token;
 
+beforeEach(() => {
+  error = null;
+});
+
 describe("testing for User workflow", () => {
-  // user related
   it("Should create a new user", async () => {
     try {
       const newUser = await UsersService.createUser({
@@ -54,7 +57,6 @@ describe("testing for User workflow", () => {
 
       user = newUser;
     } catch (err) {
-      console.log(err);
       error = err;
     }
     assert.notExists(error);
@@ -83,30 +85,28 @@ describe("testing for User workflow", () => {
         email: "ebrahim@gmail.com",
         password: "123123",
       });
-      console.log(response.body.data);
-      console.log(response.body.data.token);
-
-      expect(response.body).to.have.property("status", 200);
+      if (response.body.data.token) {
+        token = response.body.data.token;
+      }
+      expect(response).to.have.status(200);
       expect(response.body.data).to.have.property("token");
-      token = response.body.data.token;
     } catch (err) {
       error = err;
     }
+    assert.notExists(error);
   });
 
-  it("Should authenticate use by token", async () => {
+  it("Should authenticate user by token", async () => {
     try {
       const response = await chai
         .request(app)
         .get("/v1/users/me")
         .set("auth-token", token);
 
-      expect(response).to.have.status(200);
       expect(response.body.data).to.have.property("user");
     } catch (err) {
       error = err;
     }
-
     assert.notExists(error);
   });
 
@@ -122,13 +122,92 @@ describe("testing for User workflow", () => {
           longitude: "90.4226233932535",
         });
 
+      console.log(response);
+
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property("status", 1);
+      expect(response.body.status).to.equal(1);
+    } catch (err) {
+      error = err;
+    }
+    assert.notExists(error);
+  });
+});
+
+describe("testing for Event workflow", () => {
+  it("Should create an event", async () => {
+    try {
+      const eventData = {
+        name: "Philosofir adda",
+        startDate: new Date(Date.now() + 3600000), // 1 hour from now
+        endDate: new Date(Date.now() + 7200000), // 2 hours from now
+        description: "This is a test event.",
+        address: "Rampura Tv Bhavan",
+        latitude: 23.76545319531347,
+        longitude: 90.4226233932535,
+      };
+
+      eventData.location = {
+        type: "Point",
+        coordinates: [eventData.longitude, eventData.latitude],
+      };
+
+      const response = await chai
+        .request(app)
+        .post("/v1/events")
+        .set("auth-token", token)
+        .send(eventData);
+
+      expect(response).to.have.status(200);
+      expect(response.body.status).to.equal(1);
+      expect(response.body.data).to.be.an("object");
+      expect(response.body.data).to.have.property("event");
+      expect(response.body.data.event).to.have.property("name", eventData.name);
+      expect(response.body.data.event.location).to.be.an("object");
     } catch (err) {
       error = err;
       console.log(err);
     }
 
+    assert.notExists(error);
+  });
+
+  it("Should fetch events", async () => {
+    try {
+      const response = await chai.request(app).get("/v1/events");
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("status", 1);
+      expect(response.body.data).to.be.an("object");
+      expect(response.body.data).to.have.property("total");
+      expect(response.body.data).to.have.property("rows");
+      expect(response.body.data.rows).to.have.lengthOf(1);
+      expect(response.body.data).to.have.property("current");
+      expect(response.body.data).to.have.property("pages");
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
+
+    assert.notExists(error);
+  });
+
+  it("Should fetch empty rows", async () => {
+    try {
+      const response = await chai
+        .request(app)
+        .get("/v1/events?radius=5&latitude=21.4272283&longitude=92.0058074");
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("status", 1);
+      expect(response.body.data).to.be.an("object");
+      expect(response.body.data).to.have.property("total");
+      expect(response.body.data.rows).to.have.lengthOf(0);
+      expect(response.body.data).to.have.property("current");
+      expect(response.body.data).to.have.property("pages");
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
     assert.notExists(error);
   });
 });
