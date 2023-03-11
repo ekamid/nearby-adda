@@ -15,6 +15,7 @@ const { PORT, DATABASE_URL } = require("./src/config/enviroments");
 const app = express();
 
 //database connection
+
 mongoose
   .connect(DATABASE_URL, {
     useNewUrlParser: true,
@@ -97,7 +98,7 @@ app.use((err, req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });
 
 module.exports = {

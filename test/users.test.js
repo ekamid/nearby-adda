@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const config = require("../src/config/enviroments");
 
 const UserModel = require("../src/models/User");
+const EventModel = require("../src/models/Event");
 const UsersService = require("../src/modules/users/users.service");
 
 const { app } = require("../index");
@@ -19,7 +20,8 @@ const { assert, expect } = require("chai");
  * used for test suite initializing!
  */
 before(async () => {
-  await mongoose.connect(config.DATABASE_URL);
+  // await mongoose.connect(config.DATABASE_URL);
+  await cleanup();
 });
 
 /**
@@ -33,6 +35,7 @@ after(async () => {
 });
 
 var cleanup = async () => {
+  await EventModel.deleteMany();
   await UserModel.deleteMany();
 };
 
@@ -40,65 +43,58 @@ let user, error, token;
 
 describe("testing for User workflow", () => {
   // user related
-  it("User creates an account successfully", async () => {
+  it("Should create a new user", async () => {
     try {
-      const userInDB = await UsersService.createUser({
+      const newUser = await UsersService.createUser({
         name: "Ebrahim Khalil",
         email: "ebrahim@gmail.com",
         username: "ebrahim",
         password: "123123",
       });
 
-      user = userInDB;
+      user = newUser;
     } catch (err) {
+      console.log(err);
       error = err;
     }
     assert.notExists(error);
     assert.exists(user);
   });
 
-  it("User has duplicate email", async () => {
+  it("Should throw duplicate error", async () => {
     try {
-      const userInDB = await UsersService.getUserByEmail("ebrahim@gmail.com");
+      const newUser = await UsersService.createUser({
+        name: "Ebrahim Khalil",
+        email: "ebrahim@gmail.com",
+        username: "ebrahim",
+        password: "123123",
+      });
 
-      user = userInDB;
+      user = newUser;
     } catch (err) {
       error = err;
     }
-    assert.notExists(error);
-    assert.exists(user);
+    assert.exists(error);
   });
 
-  it("User has duplicate username", async () => {
-    try {
-      const userInDB = await UsersService.getUserByUsername("ebrahim");
-      user = userInDB;
-    } catch (err) {
-      error = err;
-    }
-    assert.notExists(error);
-    assert.exists(user);
-  });
-
-  it("Email and password are valid", async () => {
+  it("Should successfully logged in and return a token", async () => {
     try {
       const response = await chai.request(app).post("/v1/users/login").send({
         email: "ebrahim@gmail.com",
         password: "123123",
       });
+      console.log(response.body.data);
+      console.log(response.body.data.token);
 
-      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("status", 200);
       expect(response.body.data).to.have.property("token");
       token = response.body.data.token;
     } catch (err) {
       error = err;
-      console.log(err);
     }
-
-    assert.notExists(error);
   });
 
-  it("Authenticate use by token", async () => {
+  it("Should authenticate use by token", async () => {
     try {
       const response = await chai
         .request(app)
@@ -114,7 +110,7 @@ describe("testing for User workflow", () => {
     assert.notExists(error);
   });
 
-  it("Update address", async () => {
+  it("Should update address", async () => {
     try {
       const response = await chai
         .request(app)

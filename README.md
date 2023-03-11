@@ -12,8 +12,6 @@
   </p>
 </div>
 
-
-
 <!-- TABLE OF CONTENTS -->
 <details id="table-of-content">
   <summary>Table of Contents</summary>
@@ -27,9 +25,8 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 Nearby Adda is a web-based application that enables users to explore social gatherings and events in their vicinity. The app utilizes location-based services to display a list of events within a specific radius of the user's location.
