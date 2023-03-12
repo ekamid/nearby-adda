@@ -41,7 +41,23 @@ const getEvents = async (req, res, next) => {
   }
 };
 
+const getEvent = async (req, res, next) => {
+  const { params } = req;
+
+  try {
+    const event = await EventsService.getEventById(params.id);
+
+    apiResponse.successResponseWithData(res, "Event successfully retrieved!", {
+      event,
+    });
+  } catch (err) {
+    console.log(err); // Output:
+    apiResponse.ErrorResponse(res, err);
+  }
+};
+
 module.exports = {
   createEvent,
   getEvents,
+  getEvent,
 };

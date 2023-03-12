@@ -1,0 +1,3 @@
+☐ Event
+    ☐ Test case for getting event by id, delete event and update event
+    ☐ Implementation of those test event apis

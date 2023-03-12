@@ -39,7 +39,7 @@ var cleanup = async () => {
   await UserModel.deleteMany();
 };
 
-let user, error, token;
+let user, error, token, event;
 
 beforeEach(() => {
   error = null;
@@ -79,7 +79,7 @@ describe("testing for User workflow", () => {
     assert.exists(error);
   });
 
-  it("Should successfully logged in and return a token", async () => {
+  it("Should return a token", async () => {
     try {
       const response = await chai.request(app).post("/v1/users/login").send({
         email: "ebrahim@gmail.com",
@@ -122,8 +122,6 @@ describe("testing for User workflow", () => {
           longitude: "90.4226233932535",
         });
 
-      console.log(response);
-
       expect(response).to.have.status(200);
       expect(response.body.status).to.equal(1);
     } catch (err) {
@@ -157,6 +155,10 @@ describe("testing for Event workflow", () => {
         .set("auth-token", token)
         .send(eventData);
 
+      if (response.body.data.event) {
+        event = response.body.data.event;
+      }
+
       expect(response).to.have.status(200);
       expect(response.body.status).to.equal(1);
       expect(response.body.data).to.be.an("object");
@@ -165,7 +167,6 @@ describe("testing for Event workflow", () => {
       expect(response.body.data.event.location).to.be.an("object");
     } catch (err) {
       error = err;
-      console.log(err);
     }
 
     assert.notExists(error);
@@ -204,6 +205,38 @@ describe("testing for Event workflow", () => {
       expect(response.body.data.rows).to.have.lengthOf(0);
       expect(response.body.data).to.have.property("current");
       expect(response.body.data).to.have.property("pages");
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
+    assert.notExists(error);
+  });
+
+  it("Should fetch an event", async () => {
+    try {
+      const response = await chai.request(app).get(`/v1/events/${event._id}`);
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("status", 1);
+      expect(response.body.data).to.be.an("object");
+      expect(response.body.data).to.have.property("event");
+      expect(response.body.data.event).to.have.property("name", event.name);
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
+    assert.notExists(error);
+  });
+
+  it("Should delete an event", async () => {
+    try {
+      const response = await chai
+        .request(app)
+        .set("auth-token", token)
+        .delete(`/v1/events/${event._id}`);
+
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.property("status", 1);
     } catch (err) {
       console.log(err);
       error = err;

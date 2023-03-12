@@ -50,7 +50,12 @@ const getPaginatedEvents = async (query) => {
   return data;
 };
 
+const getEventById = async (id) => {
+  return await EventModel.findById(id).lean();
+};
+
 module.exports = {
   createEvent,
   getPaginatedEvents,
+  getEventById,
 };
