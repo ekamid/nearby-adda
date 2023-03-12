@@ -5,6 +5,7 @@ const createEvent = async (req, res) => {
   const { user } = req;
 
   try {
+    // Create the event with location and created_by properties
     const event = await EventsService.createEvent({
       ...req.body,
       location: {
@@ -31,7 +32,7 @@ const createEvent = async (req, res) => {
   }
 };
 
-const getEvents = async (req, res, next) => {
+const getEvents = async (req, res) => {
   const { query } = req;
   try {
     const result = await EventsService.getPaginatedEvents(query);

@@ -228,6 +228,41 @@ describe("testing for Event workflow", () => {
     assert.notExists(error);
   });
 
+  it("Should update an event", async () => {
+    try {
+      const updatedData = {
+        name: "Adda on Satre's Philosophy",
+        startDate: new Date(Date.now() + 3600000),
+        endDate: new Date(Date.now() + 6200000),
+        description:
+          "This adda will be on existational philosopher Satre's works",
+        address: "Rampura Tv Bhavan",
+        latitude: 23.76545319531347,
+        longitude: 90.4226233932535,
+      };
+
+      const response = await chai
+        .request(app)
+        .patch(`/v1/events/${event._id}`)
+        .set("auth-token", token)
+        .send(updatedData);
+
+      expect(response).to.have.status(200);
+      expect(response.body.status).to.equal(1);
+      expect(response.body.data).to.be.an("object");
+      expect(response.body.data).to.have.property("event");
+      expect(response.body.data.event).to.have.property(
+        "name",
+        updatedData.name
+      );
+      expect(response.body.data.event.location).to.be.an("object");
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
+    assert.notExists(error);
+  });
+
   it("Should delete an event", async () => {
     try {
       const response = await chai
