@@ -19,6 +19,6 @@ router.get("/:id", getEvent);
 router.use(auth);
 
 router.post("/", createEvent);
-// router.delete("/:id", deleteEvent);
+router.delete("/:id", deleteEvent);
 
 module.exports = router;

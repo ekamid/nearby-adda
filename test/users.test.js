@@ -232,11 +232,24 @@ describe("testing for Event workflow", () => {
     try {
       const response = await chai
         .request(app)
-        .set("auth-token", token)
-        .delete(`/v1/events/${event._id}`);
+        .delete(`/v1/events/${event._id}`)
+        .set("auth-token", token);
 
       expect(response).to.have.status(200);
       expect(response.body).to.have.property("status", 1);
+    } catch (err) {
+      console.log(err);
+      error = err;
+    }
+    assert.notExists(error);
+  });
+
+  it("Should return 404", async () => {
+    try {
+      const response = await chai.request(app).get(`/v1/events/${event._id}`);
+
+      expect(response).to.have.status(404);
+      expect(response.body).to.have.property("status", 0);
     } catch (err) {
       console.log(err);
       error = err;

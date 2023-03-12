@@ -54,8 +54,13 @@ const getEventById = async (id) => {
   return await EventModel.findById(id).lean();
 };
 
+const deleteEvent = async (id) => {
+  return await EventModel.findByIdAndDelete(id);
+};
+
 module.exports = {
   createEvent,
   getPaginatedEvents,
   getEventById,
+  deleteEvent,
 };

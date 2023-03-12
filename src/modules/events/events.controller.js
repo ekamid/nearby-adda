@@ -18,12 +18,16 @@ const createEvent = async (req, res) => {
       apiResponse.ErrorResponse(res, "Something went wrong");
     }
 
-    apiResponse.successResponseWithData(res, "Event Created Successfully!", {
-      event,
-    });
+    return apiResponse.successResponseWithData(
+      res,
+      "Event Created Successfully!",
+      {
+        event,
+      }
+    );
   } catch (err) {
     console.error(err);
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
@@ -32,12 +36,16 @@ const getEvents = async (req, res, next) => {
   try {
     const result = await EventsService.getPaginatedEvents(query);
 
-    apiResponse.successResponseWithData(res, "Events successfully retrieved!", {
-      ...result,
-    });
+    return apiResponse.successResponseWithData(
+      res,
+      "Events successfully retrieved!",
+      {
+        ...result,
+      }
+    );
   } catch (err) {
     console.log(err); // Output:
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
@@ -47,12 +55,37 @@ const getEvent = async (req, res, next) => {
   try {
     const event = await EventsService.getEventById(params.id);
 
-    apiResponse.successResponseWithData(res, "Event successfully retrieved!", {
-      event,
-    });
+    if (!event) {
+      return apiResponse.notFoundResponse(res, "Event not found");
+    }
+
+    return apiResponse.successResponseWithData(
+      res,
+      "Event successfully retrieved!",
+      {
+        event,
+      }
+    );
   } catch (err) {
     console.log(err); // Output:
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
+  }
+};
+
+const deleteEvent = async (req, res, next) => {
+  const { params } = req;
+
+  try {
+    const event = await EventsService.deleteEvent(params.id);
+
+    if (!event) {
+      return apiResponse.notFoundResponse(res, "Event not found");
+    }
+
+    return apiResponse.successResponse(res, "Event successfully deleted!");
+  } catch (err) {
+    console.log(err); // Output:
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
@@ -60,4 +93,5 @@ module.exports = {
   createEvent,
   getEvents,
   getEvent,
+  deleteEvent,
 };

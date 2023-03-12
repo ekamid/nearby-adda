@@ -7,12 +7,12 @@ const createUser = async (req, res) => {
     const user = await UsersService.createUser(req.body);
 
     if (!user) {
-      apiResponse.ErrorResponse(res, "Something went wrong");
+      return apiResponse.ErrorResponse(res, "Something went wrong");
     }
 
-    apiResponse.successResponse(res, "User Created Successfully!");
+    return apiResponse.successResponse(res, "User Created Successfully!");
   } catch (err) {
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
@@ -46,11 +46,15 @@ const loginUser = async (req, res) => {
 
     const data = createJWToken(userData);
 
-    apiResponse.successResponseWithData(res, "User logged in successfully", {
-      token: data.token,
-    });
+    return apiResponse.successResponseWithData(
+      res,
+      "User logged in successfully",
+      {
+        token: data.token,
+      }
+    );
   } catch (err) {
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
@@ -71,7 +75,7 @@ const getAuthenticatedUser = async (req, res) => {
       }
     );
   } catch (err) {
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
@@ -81,7 +85,7 @@ const updateUserAddress = async (req, res) => {
     const updatedUser = await UsersService.updateUserAddress(user.id, body);
 
     if (!updatedUser.address) {
-      apiResponse.ErrorResponse(res, "Something went wrong");
+      return apiResponse.ErrorResponse(res, "Something went wrong");
     }
 
     return apiResponse.successResponse(
@@ -90,7 +94,7 @@ const updateUserAddress = async (req, res) => {
     );
   } catch (err) {
     console.log(err);
-    apiResponse.ErrorResponse(res, err);
+    return apiResponse.ErrorResponse(res, err);
   }
 };
 
