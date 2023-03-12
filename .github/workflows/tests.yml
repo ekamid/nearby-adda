@@ -30,9 +30,9 @@ jobs:
       - run: npm run build --if-present
       - name: Add Environment
         env:
-          DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
-          BASE_PUBLIC_URL: ${{ secrets.BASE_PUBLIC_URL }}
+        DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+        JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+        BASE_PUBLIC_URL: ${{ secrets.BASE_PUBLIC_URL }}
       - run: npm test
