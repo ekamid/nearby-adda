@@ -21,6 +21,10 @@ const { assert, expect } = require("chai");
  */
 before(async () => {
   // await mongoose.connect(config.DATABASE_URL);
+  if (mongoose.connection.readyState !== 1) {
+    console.error("Mongoose is not connected");
+    process.exit(1);
+  }
   await cleanup();
 });
 
