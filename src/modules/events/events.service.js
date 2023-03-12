@@ -2,8 +2,36 @@ const { getPagination, getPagingData } = require("../../helpers/query");
 const { validateLatitudeLongitude } = require("../../helpers/validators");
 const EventModel = require("../../models/Event");
 
-const createEvent = async (eventData) => {
-  return await EventModel.create(eventData);
+const createEvent = async (created_by, eventData) => {
+  const data = {
+    ...eventData,
+    location: {
+      type: "Point",
+      coordinates: [eventData.longitude, eventData.latitude],
+    },
+    created_by,
+  };
+
+  return await EventModel.create(data);
+};
+
+const updateEvent = async (eventId, eventData) => {
+  const data = {
+    ...eventData,
+  };
+
+  if (data.longitude && data.latitude) {
+    data["location"] = {
+      type: "Point",
+      coordinates: [eventData.longitude, eventData.latitude],
+    };
+  }
+
+  return await EventModel.findByIdAndUpdate(
+    eventId,
+    { ...data },
+    { new: true }
+  );
 };
 
 const getPaginatedEvents = async (query) => {
@@ -63,4 +91,5 @@ module.exports = {
   getPaginatedEvents,
   getEventById,
   deleteEvent,
+  updateEvent,
 };

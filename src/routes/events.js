@@ -11,6 +11,7 @@ const {
   getEvents,
   getEvent,
   deleteEvent,
+  updateEvent,
 } = require("../modules/events/events.controller");
 
 router.get("/", getEvents);
@@ -20,5 +21,6 @@ router.use(auth);
 
 router.post("/", createEvent);
 router.delete("/:id", deleteEvent);
+router.patch("/:id", updateEvent);
 
 module.exports = router;

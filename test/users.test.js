@@ -236,9 +236,6 @@ describe("testing for Event workflow", () => {
         endDate: new Date(Date.now() + 6200000),
         description:
           "This adda will be on existational philosopher Satre's works",
-        address: "Rampura Tv Bhavan",
-        latitude: 23.76545319531347,
-        longitude: 90.4226233932535,
       };
 
       const response = await chai

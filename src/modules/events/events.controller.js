@@ -6,14 +6,7 @@ const createEvent = async (req, res) => {
 
   try {
     // Create the event with location and created_by properties
-    const event = await EventsService.createEvent({
-      ...req.body,
-      location: {
-        type: "Point",
-        coordinates: [req.body.longitude, req.body.latitude],
-      },
-      created_by: user.id,
-    });
+    const event = await EventsService.createEvent(user.id, req.body);
 
     if (!event) {
       apiResponse.ErrorResponse(res, "Something went wrong");
@@ -24,6 +17,38 @@ const createEvent = async (req, res) => {
       "Event Created Successfully!",
       {
         event,
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    return apiResponse.ErrorResponse(res, err);
+  }
+};
+
+const updateEvent = async (req, res) => {
+  const { user, params, body } = req;
+
+  try {
+    const event = await EventsService.getEventById(params.id);
+
+    if (!event) {
+      return apiResponse.notFoundResponse(res, "Event not found");
+    }
+
+    if (event.created_by.toString() !== user.id) {
+      return apiResponse.ErrorResponse(
+        res,
+        "You do not have permission to update this event"
+      );
+    }
+
+    const updatedEvent = await EventsService.updateEvent(event._id, body);
+
+    return apiResponse.successResponseWithData(
+      res,
+      "Event updated Successfully!",
+      {
+        event: updatedEvent,
       }
     );
   } catch (err) {
@@ -74,13 +99,20 @@ const getEvent = async (req, res, next) => {
 };
 
 const deleteEvent = async (req, res, next) => {
-  const { params } = req;
+  const { params, user } = req;
 
   try {
     const event = await EventsService.deleteEvent(params.id);
 
     if (!event) {
       return apiResponse.notFoundResponse(res, "Event not found");
+    }
+
+    if (event.created_by.toString() !== user.id) {
+      return apiResponse.ErrorResponse(
+        res,
+        "You do not have permission to delete this event"
+      );
     }
 
     return apiResponse.successResponse(res, "Event successfully deleted!");
@@ -95,4 +127,5 @@ module.exports = {
   getEvents,
   getEvent,
   deleteEvent,
+  updateEvent,
 };
