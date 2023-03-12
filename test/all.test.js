@@ -20,11 +20,6 @@ const { assert, expect } = require("chai");
  * used for test suite initializing!
  */
 before(async () => {
-  // await mongoose.connect(config.DATABASE_URL);
-  if (mongoose.connection.readyState !== 1) {
-    console.error("Mongoose is not connected");
-    process.exit(1);
-  }
   await cleanup();
 });
 
