@@ -244,7 +244,7 @@ describe("testing for Event workflow", () => {
         .send(updatedData);
 
       expect(response).to.have.status(200);
-      expect(response.body.status).to.equal(2); //fail test
+      expect(response.body.status).to.equal(1);
       expect(response.body.data).to.be.an("object");
       expect(response.body.data).to.have.property("event");
       expect(response.body.data.event).to.have.property(
