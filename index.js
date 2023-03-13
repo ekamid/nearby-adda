@@ -45,10 +45,12 @@ app.use(express.urlencoded({ extended: false }));
 // to allow cross origin resource sharing
 app.use(cors());
 
+const indexRouter = require("./src/routes/index");
 const usersRouter = require("./src/routes/users");
 const eventsRouter = require("./src/routes/events");
 
 //Route Prefixes
+app.use("/", indexRouter);
 app.use("/v1/users", usersRouter);
 app.use("/v1/events", eventsRouter);
 app.use("/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerApiDoc));
