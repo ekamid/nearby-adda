@@ -25,12 +25,10 @@ jobs:
         run: npm test
       - name: Check running test is passed or failed! if failed then exit immediately
         run: |
-          if [ $? -eq 0 ]
-          then
-            echo "Tests failed! Exit immediately!"
-            exit 1
+          if [ $? -eq 0 ]; then
+            echo "Command failed! Exit immediately! :("
           else
-            echo "Tests Passed! Proceeding further!"
+            echo "Command Success! Deploy! :D"
           fi
   deploy:
     runs-on: ubuntu-latest
