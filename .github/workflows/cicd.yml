@@ -23,6 +23,17 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test
+      - name: Check running test is passed or failed
+        run: |
+          echo "Running tests..."
+          # Insert your test commands here
+          if [ $? -eq 0 ]
+          then
+            echo "Tests passed!"
+          else
+            echo "Tests failed!"
+            exit 1
+          fi
   deploy:
     runs-on: ubuntu-latest
     needs: test

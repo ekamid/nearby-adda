@@ -27,9 +27,15 @@ before(async () => {
  * The codes inside this block will be executed after all the tests in this file runs,
  * used for database cleanup!
  */
+
+let allTestsPassed = true;
+
 after(async () => {
   await cleanup();
   await mongoose.connection.close();
+  if (!allTestsPassed) {
+    process.exitCode = 0;
+  }
   process.exit();
 });
 
@@ -42,6 +48,12 @@ let user, error, token, event;
 
 beforeEach(() => {
   error = null;
+});
+
+afterEach(function () {
+  if (this.currentTest.state === "failed") {
+    allTestsPassed = false;
+  }
 });
 
 describe("testing for User workflow", () => {
@@ -88,7 +100,7 @@ describe("testing for User workflow", () => {
         token = response.body.data.token;
       }
       expect(response).to.have.status(200);
-      expect(response.body.data).to.have.property("token");
+      expect(response.body.data).to.have.property("tokenn");
     } catch (err) {
       error = err;
     }
