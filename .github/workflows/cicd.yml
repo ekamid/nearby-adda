@@ -21,8 +21,9 @@ jobs:
       - name: Test
         run: npm test
   deploy:
-    needs: test
     runs-on: ubuntu-latest
+    needs: test
+    if: ${{ needs.test.result == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
