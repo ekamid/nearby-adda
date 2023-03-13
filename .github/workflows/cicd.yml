@@ -27,6 +27,8 @@ jobs:
         run: |
           echo "Running tests..."
           # Insert your test commands here
+          command_exit_code=$?
+          echo "Command exited with status code $command_exit_code"
           if [ $? -eq 0 ]
           then
             echo "Tests passed!"
