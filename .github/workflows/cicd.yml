@@ -22,3 +22,13 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy to Vercel
+        uses: vercel/action@v20
+        with:
+          vercel-token: ${{ secrets.VARCEL_SECRET_KEY }}
