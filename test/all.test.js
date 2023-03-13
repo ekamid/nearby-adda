@@ -100,7 +100,7 @@ describe("testing for User workflow", () => {
         token = response.body.data.token;
       }
       expect(response).to.have.status(200);
-      expect(response.body.data).to.have.property("tokenn");
+      expect(response.body.data).to.have.property("token");
     } catch (err) {
       error = err;
     }
