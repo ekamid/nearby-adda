@@ -34,7 +34,7 @@ after(async () => {
   await cleanup();
   await mongoose.connection.close();
   if (!allTestsPassed) {
-    process.exitCode = 0;
+    process.exitCode = 123; //in bash no zero exit code means is failed
   }
   process.exit();
 });

@@ -28,9 +28,9 @@ jobs:
           command_exit_code=$?
           echo "Command exited with status code $command_exit_code"
           if [ $? -eq 0 ]; then
-            echo "Command failed! Exit immediately! :("
-          else
             echo "Command Success! Deploy! :D"
+          else
+            echo "Command failed! Exit immediately! :("
           fi
   deploy:
     runs-on: ubuntu-latest
