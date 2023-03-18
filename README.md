@@ -8,6 +8,8 @@
     <br />
     <a href="https://nearby-adda.vercel.app/" target="_blank">View Demo</a>
     ·
+    <a href="https://nearby-adda.vercel.app/" target="_blank">View Frontend Repository</a>
+    ·
     <a href="https://github.com/ekamid/nearby-adda/issues">Report Bug</a>
   </p>
 </div>
