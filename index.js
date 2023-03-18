@@ -14,9 +14,6 @@ const { PORT, DATABASE_URL } = require("./src/config/enviroments");
 //initialize app
 const app = express();
 
-console.log("DATABASE_URL");
-console.log(DATABASE_URL);
-
 //database connection
 
 mongoose
