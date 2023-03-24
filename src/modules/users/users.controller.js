@@ -59,7 +59,7 @@ const loginUser = async (req, res) => {
 };
 
 const getAuthenticatedUser = async (req, res) => {
-  const { user } = req;
+  const { user, redisClient } = req;
   try {
     const authenticatedUser = await UsersService.getUserById(user.id);
 
@@ -67,6 +67,9 @@ const getAuthenticatedUser = async (req, res) => {
       return apiResponse.notFoundResponse(res, "User not found");
     }
 
+    //store user information in cache
+    redisClient.setEx(user.id, 280000, JSON.stringify(authenticatedUser));
+    await redisClient.quit();
     return apiResponse.successResponseWithData(
       res,
       "Logged in user data retrived successfully",
@@ -75,6 +78,7 @@ const getAuthenticatedUser = async (req, res) => {
       }
     );
   } catch (err) {
+    console.error(err);
     return apiResponse.ErrorResponse(res, err);
   }
 };

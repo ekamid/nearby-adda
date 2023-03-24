@@ -2,6 +2,7 @@ require("dotenv").config();
 
 module.exports = {
   PORT: process.env.PORT || 5000,
+  REDIS_PORT: process.env.PORT || 5000,
   DATABASE_URL:
     process.env.NODE_ENV === "test"
       ? process.env.DATABASE_URL_TEST

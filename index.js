@@ -1,4 +1,5 @@
 const express = require("express");
+const redis = require("redis");
 const logger = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -14,7 +15,13 @@ const { PORT, DATABASE_URL } = require("./src/config/enviroments");
 //initialize app
 const app = express();
 
-//database connection
+const redisClient = require("./src/config/redis");
+
+// Use the Redis client globally
+app.use((req, res, next) => {
+  req.redisClient = redisClient;
+  next();
+});
 
 mongoose
   .connect(DATABASE_URL, {

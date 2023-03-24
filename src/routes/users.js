@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const auth = require("../middlewares/auth");
+const { userCache } = require("../middlewares/cache");
 
 const {
   registerValidationRules,
@@ -23,7 +24,7 @@ router.post("/login", loginValidationRules(), validate, loginUser);
 
 router.use(auth);
 
-router.get("/me", getAuthenticatedUser);
+router.get("/me", userCache, getAuthenticatedUser);
 
 router.post(
   "/update-address",
