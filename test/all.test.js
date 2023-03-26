@@ -8,24 +8,15 @@ const UserModel = require("../src/database//models/User");
 const EventModel = require("../src/database/models/Event");
 const UsersService = require("../src/modules/users/users.service");
 
-const app = require("../src/index");
+const { app } = require("../src");
 
 chai.use(chaiHttp); // add chai-http to chai
 
 const { assert, expect } = require("chai");
 
-/**
- * The codes inside this block will run before any tests in this file runs,
- * used for test suite initializing!
- */
 before(async () => {
   await cleanup();
 });
-
-/**
- * The codes inside this block will be executed after all the tests in this file runs,
- * used for database cleanup!
- */
 
 let allTestsPassed = true;
 
