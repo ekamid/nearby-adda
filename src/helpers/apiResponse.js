@@ -24,6 +24,14 @@ exports.ErrorResponse = function (res, msg) {
   return res.status(500).json(data);
 };
 
+exports.forbiddenResponse = function (res, msg) {
+  var data = {
+    status: 0,
+    message: msg,
+  };
+  return res.status(403).json(data);
+};
+
 exports.notFoundResponse = function (res, msg) {
   let data = {
     status: 0,

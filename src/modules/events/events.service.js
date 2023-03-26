@@ -1,6 +1,6 @@
 const { getPagination, getPagingData } = require("../../helpers/query");
 const { validateLatitudeLongitude } = require("../../helpers/validators");
-const EventModel = require("../../models/Event");
+const EventModel = require("../../database/models/Event");
 
 const createEvent = async (created_by, eventData) => {
   const data = {

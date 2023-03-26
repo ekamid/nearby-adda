@@ -3,13 +3,12 @@ process.env.NODE_ENV = "test"; //it changes the environment dev to test
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const mongoose = require("mongoose");
-const config = require("../src/config/enviroments");
 
-const UserModel = require("../src/models/User");
-const EventModel = require("../src/models/Event");
+const UserModel = require("../src/database//models/User");
+const EventModel = require("../src/database/models/Event");
 const UsersService = require("../src/modules/users/users.service");
 
-const { app } = require("../index");
+const app = require("../src/index");
 
 chai.use(chaiHttp); // add chai-http to chai
 

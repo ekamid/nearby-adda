@@ -7,8 +7,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node src/index.js",
+    "server": "nodemon src/index.js",
     "test": "mocha --timeout 10000"
   },
   "repository": {
@@ -35,7 +35,8 @@
     "nodemon": "^2.0.16",
     "nyc": "^15.1.0",
     "redis": "^4.6.5",
-    "swagger-ui-express": "^4.6.2"
+    "swagger-ui-express": "^4.6.2",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "chai": "^4.3.6",
